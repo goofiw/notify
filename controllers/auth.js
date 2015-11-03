@@ -1,7 +1,7 @@
 'use strict'
 var monk = require('monk');
 var wrap = require('co-monk');
-var db = monk('localhost/rtcspeeddating');
+var db = monk('localhost/testNotify');
 var co = require('co');
 var bcrypt = require('co-bcrypt');
 var jwt = require('jsonwebtoken');
@@ -57,6 +57,7 @@ function *checkToken(next) {
     this.state.user = user;
     yield next;
   } else {
+    this.status = 403;
     this.body = {message: 'failed token auth'};
   }
 }
@@ -71,6 +72,7 @@ function *login(next) {
     this.user = user;
     yield next;
   } else {
+    this.status = 403;
     this.body = {message: 'invalid username or password'};
   }
 }

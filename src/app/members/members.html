@@ -5,15 +5,24 @@
     <input type="text" ng-model="member.first" placeholder="first"/>
     <input type="text" ng-model="member.last" placeholder="last"/>
     <label>Email</label>
-    <input type="text" ng-model="member.email" ng-model-options="{ getterSetter: true }" placeholder="you@yourdomain.xyz"/>
+    <input type="text" ng-model="member.email" placeholder="you@yourdomain.xyz"/>
   </form>
   <button ng-click="addNewMember()">Add</button>
 </div>
 
 <table style="width:100%">
+  <tr>
+    <th>Name</th>
+    <th>Company</th>
+    <th>Email</th>
+    <th>Slack</th>
+    <th>Preferred Contact</th>
+  </tr>
   <tr ng-repeat="member in allMembers">
     <td>{{member.name}}</td>
+    <td>{{member.company}}</td>
     <td>{{member.email}}</td> 
     <td>{{member.slack}}</td>
+    <td>{{member.prefferedContact}}</td>
   </tr>
 </table>

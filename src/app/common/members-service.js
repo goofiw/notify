@@ -4,23 +4,30 @@ angular.module('notify')
   return {
     addMembers: function(newMembers){
       console.log(newMembers);
-      $http.post('/api/addmembers', 
+      return $http.post('/api/addmembers', 
         {data:newMembers}
         );
 
     },
     getMembers: function() {
       console.log('getting members');
-      $http.get('/api/members')
+      return $http.get('/api/members')
       .success(function(data){
         console.log(data);
       })
       .error(function(err){
-        console.log(err);
+        throw err;
       })
     },
     addMember: function(member){
-      //add member
+      return $http.post('/api/addmember',
+        {data:member}
+        ).success(function(data) {
+          return data.data;
+        })
+        .error(function(err){
+          throw err;
+        });
     },
     removeMember: function(member) {
 

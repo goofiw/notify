@@ -6,9 +6,7 @@ var router = require('koa-router')();
 
   router.post('/api/addmembers', members.auth, members.addMembers);
 
-  router.post('/api/addmember', function *(next){
-    //accepts one member
-  }),
+  router.post('/api/addmember', members.auth, members.addNewMember)
 
   router.post('/api/notify', members.notify);
 

@@ -1,0 +1,19 @@
+<button ng-click="showAddMember = true">Add Member</button>
+<div ng-show="showAddMember">
+  <form>
+    <label>Name</label>
+    <input type="text" ng-model="member.first" placeholder="first"/>
+    <input type="text" ng-model="member.last" placeholder="last"/>
+    <label>Email</label>
+    <input type="text" ng-model="member.email" ng-model-options="{ getterSetter: true }" placeholder="you@yourdomain.xyz"/>
+  </form>
+  <button ng-click="addNewMember()">Add</button>
+</div>
+
+<table style="width:100%">
+  <tr ng-repeat="member in allMembers">
+    <td>{{member.name}}</td>
+    <td>{{member.email}}</td> 
+    <td>{{member.slack}}</td>
+  </tr>
+</table>

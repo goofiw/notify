@@ -9,8 +9,4 @@ angular.module('notify')
     MemberService.addMembers(members);
     console.log('finished uploading');
   }
-
-  $scope.getAllMembers = function() {
-    $scope.allMembers = MemberService.getMembers();
-  }
 }]);

@@ -1,6 +1,7 @@
 <div>
   <input id='testUpload' type='file' fileupload done='addMembers' model='$parent' > 
   <button ng-if='members' ui-sref='upload.show' ng-click='getAllMembers()'>Submit</button>
+  <button ui-sref='members'>Show Members</button>
   <div ui-view></div>
 </div>
 

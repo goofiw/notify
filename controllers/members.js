@@ -38,6 +38,12 @@ module.exports.auth = function *auth(next) {
   yield next;
 }
 
+module.exports.addNewMember = function *addNewMember(next) {
+  if ('POST' != this.method) return yield next;
+  var newMember = JSON.parse(this.body).data;
+  this.body = add(members, newMember)
+}
+
 module.exports.notify = function *notify(next) {
   if ('POST' != this.method) return yield next;
   var data = JSON.parse(this.body);
@@ -64,9 +70,21 @@ function add(members, member) {
     company: member['Company/Org'],
     slack: member.Slack
   }
+  if (member.first != undefined) {
+    newMember = {
+      name: member.first + ' ' + member.last,
+      email: member.email,
+      company: member.company,
+      slack: member.slack
+    }
+  }
+  console.log('logging member in addMember', member);
   console.log('adding', newMember);
-  members.insert(newMember, function(err){
-    console.log(err);
+  members.insert(newMember, function(err, member){
+    if (err) {
+      throw err;
+    }
+    member;
   });
-
+  return newMember;
 }

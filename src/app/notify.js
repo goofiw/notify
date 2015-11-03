@@ -14,6 +14,12 @@ angular.module('notify', [
         controller: 'UploadCtrl',
         controllerAs: 'uploadCtrl'
       })
+      .state('members', {
+        url: '/',
+        templateUrl: 'app/members/members.html',
+        controller: 'MembersCtrl',
+        controllerAs: 'membersCtrl'
+      })
       .state('upload.show', {
         url:'/showmembers',
         templateUrl: 'app/file-upload/member-table.html'
@@ -40,7 +46,7 @@ angular.module('notify', [
       $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, error){
         event.preventDefault();
         if (error == 'AUTH_REQUIRED') {
-        $state.go('login');
+          $state.go('login');
         }  
       });
     });

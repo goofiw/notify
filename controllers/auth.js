@@ -89,9 +89,9 @@ function *logout(next) {
 }
 
 module.exports = {
-  login,
-  signup,
-  logout,
-  checkToken
+  login: login,
+  signup: signup,
+  logout: logout,
+  checkToken: checkToken
 }
 

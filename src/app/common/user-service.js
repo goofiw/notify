@@ -1,8 +1,10 @@
 angular.module('notify')
 .factory('UserService', ['$http', '$state', function($http, $state){
   var login = function(credentials) {
+    console.log('login creds')
     return $http.post('/api/login', credentials)
     .success(function(data) {
+      console.log('resp from login', data)
       return data.data;
     })
     .error(function(err){
@@ -16,6 +18,7 @@ angular.module('notify')
       return data.data;
     })
     .error(function(err) {
+      console.log(err);
       throw err;
     })
   }
@@ -24,7 +27,7 @@ angular.module('notify')
     return $http.get('/api/authcheck')
     .success(function(data) {
       console.log('auth success', data)
-      return data;
+      return true;
     })
     .error(function(err) {
       console.log('auth fail')

@@ -5,7 +5,7 @@ angular.module('notify', [
   'ngResource'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/');
 
     $stateProvider
       .state('upload', {
@@ -16,7 +16,7 @@ angular.module('notify', [
         resolve: {auth: auth}
       })
       .state('members', {
-        url: '/',
+        url: '/members',
         templateUrl: 'app/members/members.html',
         controller: 'MembersCtrl',
         controllerAs: 'membersCtrl',
@@ -38,7 +38,7 @@ angular.module('notify', [
         templateUrl: 'app/notify/notify.tmpl.html',
         controller: 'NotifyCtrl',
         controllerAs:'ctrl',
-        resolve: {authenticate: auth}
+        resolve: {auth: auth}
       });
 
       var token = $("meta[name=\"csrf-token\"]").attr("content")
@@ -52,7 +52,6 @@ angular.module('notify', [
       function auth($q, UserService, $state, $timeout) {
         console.log('wtf')
         return UserService.isAuthorized().then(function(data) {
-          console.log('data in auth', data);
           if (data.status === 403) {
             $state.go('login')
           } else {

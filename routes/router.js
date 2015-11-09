@@ -3,15 +3,17 @@ var members = require('../controllers/members.js');
 var auth = require('../controllers/auth.js');
 var router = require('koa-router')();
 
-  router.get('/api/members', auth.checkToken, members.allmembers);
+  router.get('/api/members', auth.isAuth, members.allmembers);
 
-  router.post('/api/addmembers', auth.checkToken, members.addMembers);
+  router.post('/api/addmembers', auth.isAuth, members.addMembers);
 
-  router.post('/api/addmember', auth.checkToken, members.addNewMember);
+  router.post('/api/addmember', auth.isAuth, members.addNewMember);
 
   router.post('/api/notify', members.notify);
 
   router.post('/api/login', auth.login);
+
+  router.post('/api/signup/', auth.signup);
 
   router.get('/api/authcheck', auth.checkToken);
 

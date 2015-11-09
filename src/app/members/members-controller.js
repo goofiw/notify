@@ -1,11 +1,11 @@
 angular.module('notify')
 .controller('MembersCtrl', ['$scope', 'MemberService', function($scope, MemberService){
+  $scope.allMembers = [];
   $scope.getAllMembers = function() {
     MemberService.getMembers().then(function(data) {
-      console.log(data);
       $scope.allMembers = data.data;
       // $scope.$apply();
-      console.log($scope.allMembers)
+      console.log('all members', $scope.allMembers)
     })
   }
   $scope.getAllMembers();

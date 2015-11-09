@@ -33,11 +33,6 @@ module.exports.addMembers = function *addMembers(next) {
   this.body = yield members.find({});
 }
 
-module.exports.auth = function *auth(next) {
-  console.log('One day, we will verify users are logged in');
-  yield next;
-}
-
 module.exports.addNewMember = function *addNewMember(next) {
   if ('POST' != this.method) return yield next;
   var newMember = JSON.parse(this.body).data;

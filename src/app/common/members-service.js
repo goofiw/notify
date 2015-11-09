@@ -13,7 +13,7 @@ angular.module('notify')
       console.log('getting members');
       return $http.get('/api/members')
       .success(function(data){
-        console.log(data);
+        console.log('get all members data', data);
       })
       .error(function(err){
         throw err;

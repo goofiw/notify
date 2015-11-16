@@ -41,18 +41,14 @@ angular.module('notify', [
         resolve: {auth: auth}
       });
 
-      var token = $("meta[name=\"csrf-token\"]").attr("content")
-
-      // include token in $httpProvider default headers
-      $httpProvider.defaults.withCredentials = true;
-      $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] = token
       $httpProvider.interceptors.push('AuthInterceptor')
 
       //authentication
       function auth($q, UserService, $state, $timeout) {
         console.log('wtf')
         return UserService.isAuthorized().then(function(data) {
-          if (data.status === 403) {
+          console.log('data from isAuthorized', data);
+          if (data === undefined || data.status != 200) {
             $state.go('login')
           } else {
             return true;

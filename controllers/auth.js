@@ -29,7 +29,7 @@ function *signup(next) {
     //create user
     var salt = yield bcrypt.genSalt(10)
     var hash = yield bcrypt.hash(userData.password, salt)
-    var token = jwt.sign({ foo: user }, process.env.JWTSECRET);
+    var token = jwt.sign({ foo: user.name }, process.env.JWTSECRET);
     users.updateById(user.id, this.user, function(err, user) {
       if (err) {
         this.body = {message: 'error updating jwt'};
@@ -49,6 +49,7 @@ function *signup(next) {
 }
 
 function *checkToken(next) {
+  console.log('this', this)
   var providedToken = this.header.authorization;
   var user = yield users.findOne({jwt: providedToken})
   if (user) {
@@ -61,6 +62,7 @@ function *checkToken(next) {
 }
 
 function *isAuth(next) {
+  console.log('this', this)
   var providedToken = this.header.authorization;
   var user = yield users.findOne({jwt: providedToken})
   if (user) {
@@ -74,6 +76,8 @@ function *isAuth(next) {
 
 function *login(next) {
   var userData = this.request.body;
+  console.log('user data in login', userData);
+  console.log('the login request', this.request)
   // console.log('logging body in login', this);
   var user = yield users.findOne({username: userData.username})
   if(user && bcrypt.compare(userData.password, user.hash)) {

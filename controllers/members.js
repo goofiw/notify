@@ -24,7 +24,11 @@ module.exports.addMembers = function *addMembers(next) {
   if ('POST' != this.method) return yield next;
   var newMembers = JSON.parse(this.body).data;
   for(let i = 0; i < newMembers.length; i++){
-    add(members, newMembers[i]);
+    var checkDuplicate = yield members.find({email: newMembers[i].Email});
+    console.log(checkDuplicate, "checking for Duplicate", newMembers[i].Email)
+    if (checkDuplicate.length === 0) {
+      add(members, newMembers[i]);
+    }
     // if (!inserted) {
     //   console.log(members[i], ' could not be added')
     // }
@@ -75,6 +79,7 @@ function add(members, member) {
   }
   console.log('logging member in addMember', member);
   console.log('adding', newMember);
+
   members.insert(newMember, function(err, member){
     if (err) {
       throw err;

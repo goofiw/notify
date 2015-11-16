@@ -6,7 +6,7 @@ angular.module('notify')
     console.log('data after login', data)
     var token = data.data.jwt;
     LocalService.set("token", token);
-    $state.go('notify');
+    $state.go('/');
   });
  }
  $scope.signup = function() {

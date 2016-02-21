@@ -81,7 +81,7 @@ function *login(next) {
   // console.log('logging body in login', this);
   var user = yield users.findOne({username: userData.username})
   if(user && bcrypt.compare(userData.password, user.hash)) {
-    user.jwt = jwt.sign({ foo: user }, process.env.JWTSECRET);
+    user.jwt = jwt.sign({ foo: user.username }, process.env.JWTSECRET);
     yield users.updateById(user._id, user)
     this.user = user;
     this.body = user;

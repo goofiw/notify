@@ -6,6 +6,8 @@ var db = monk('localhost/testNotify');
 var co = require('co');
 
 var mailer = require('../modules/mailer.js');
+var slack = require('../modules/slack.js');
+
 
 var members = wrap(db.get('members'));
 
@@ -23,6 +25,7 @@ module.exports.allmembers = function *allmembers(next) {
 module.exports.addMembers = function *addMembers(next) {
   if ('POST' != this.method) return yield next;
   var newMembers = JSON.parse(this.body).data;
+  members.remove({});
   for(let i = 0; i < newMembers.length; i++){
     var checkDuplicate = yield members.find({email: newMembers[i].Email});
     console.log(checkDuplicate, "checking for Duplicate", newMembers[i].Email)
@@ -48,15 +51,19 @@ module.exports.notify = function *notify(next) {
   var data = JSON.parse(this.body);
   console.log('\n\n\ndata',data);
   var notifyMember = yield members.findOne({_id: data.id})
+  var message = 'This is an automated message from the StartUp Hall Front desk. \n' + data.visitorName + ' has arrived and is waiting in the lobby \n\n\n\n Thank you, \n\n StartUp Hall Robots'; // plaintext body 
 
   var mailOptions = {
       from: notifyMember.name + ' <goofiwmailer@gmail.com>', // sender address 
       to: notifyMember.name + ', ' + notifyMember.email + ', Associate <associate@startuphall.org>',// list of receivers 
       subject: data.visitorName + ' is waiting in the lobby', // Subject line 
-      text: 'This is an automated message from the StartUp Hall Front desk. \n' + data.visitorName + ' has arrived and is waiting in the lobby \n\n\n\n Thank you, \n\n StartUp Hall Robots', // plaintext body 
+      text: message
   };
   mailer(mailOptions);
-  console.log(notifyMember);
+  if (notifyMember.slack) {
+    console.log("sending slack");
+    slack(message, notifyMember.slack);
+  }
   this.body =  yield {member: notifyMember.name};
 }
 
@@ -67,14 +74,14 @@ function add(members, member) {
     name: member.First + ' ' + member.Last,
     email: member.Email,
     company: member['Company/Org'],
-    slack: member.Slack
+    slack: member.Slack.slice(1)
   }
   if (member.first != undefined) {
     newMember = {
       name: member.first + ' ' + member.last,
       email: member.email,
       company: member.company,
-      slack: member.slack
+      slack: member.slack.slice(1)
     }
   }
   console.log('logging member in addMember', member);

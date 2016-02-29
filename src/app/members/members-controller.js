@@ -9,6 +9,12 @@ angular.module('notify')
     })
   }
   $scope.getAllMembers();
+  $scope.addMembers = function(members) {
+    MemberService.addMembers(members).then(function() { 
+      $scope.getAllMembers();
+      alert("upload finished")
+    });
+  }
   $scope.addNewMember = function() {
     console.log('new menber', $scope.member)
     MemberService.addMember($scope.member).then(function(data) {

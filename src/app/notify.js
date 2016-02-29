@@ -5,16 +5,9 @@ angular.module('notify', [
   'ngResource'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
-      .state('upload', {
-        url:'/',
-        templateUrl: 'app/file-upload/upload.html',
-        controller: 'UploadCtrl',
-        controllerAs: 'uploadCtrl',
-        resolve: {auth: auth}
-      })
       .state('members', {
         url: '/members',
         templateUrl: 'app/members/members.html',
@@ -22,24 +15,24 @@ angular.module('notify', [
         controllerAs: 'membersCtrl',
         resolve: {auth: auth}
       })
-      .state('upload.show', {
-        url:'/showmembers',
-        templateUrl: 'app/file-upload/member-table.html',
-        resolve: {auth: auth}
-      })
+      // .state('upload.show', {
+      //   url:'/showmembers',
+      //   templateUrl: 'app/file-upload/member-table.html',
+      //   resolve: {auth: auth}
+      // })
       .state('login', {
         url:'/login',
         templateUrl: 'app/login/login.tmpl.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
-      .state('notify', {
-        url:'/notify',
-        templateUrl: 'app/notify/notify.tmpl.html',
-        controller: 'NotifyCtrl',
-        controllerAs:'ctrl',
-        resolve: {auth: auth}
-      });
+      // .state('notify', {
+      //   url:'/notify',
+      //   templateUrl: 'app/notify/notify.tmpl.html',
+      //   controller: 'NotifyCtrl',
+      //   controllerAs:'ctrl',
+      //   resolve: {auth: auth}
+      // });
 
       $httpProvider.interceptors.push('AuthInterceptor')
 

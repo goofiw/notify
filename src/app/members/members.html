@@ -1,5 +1,5 @@
-<button ng-click="showAddMember = true">Add Member</button>
-<div ng-show="showAddMember">
+<!-- <button ng-click="showAddMember = true">Add Member</button> -->
+<!-- <div ng-show="showAddMember">
   <form>
     <label>Name</label>
     <input type="text" ng-model="member.first" placeholder="first"/>
@@ -9,7 +9,12 @@
   </form>
   <button ng-click="addNewMember()">Add</button>
 </div>
-
+ --><div>
+  <input id='testUpload' type='file' fileupload done='addMembers' model='$parent' > 
+  <button ng-if='members' ui-sref='upload.show' ng-click='getAllMembers()'>Submit</button>
+  <button ui-sref='members'>Show Members</button>
+  <div ui-view></div>
+</div>
 <table style="width:100%">
   <tr>
     <th>Name</th>
@@ -23,6 +28,6 @@
     <td>{{member.company}}</td>
     <td>{{member.email}}</td> 
     <td>{{member.slack}}</td>
-    <td>{{member.prefferedContact}}</td>
+    <!-- <td>{{member.prefferedContact}}</td> -->
   </tr>
 </table>

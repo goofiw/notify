@@ -5,7 +5,7 @@
   <label>Password</label>
   <input type="password" ng-model="user.password"/>
   <button ng-show="!showSignup" ng-click="userLogin()">Login</button>
-  <button ng-hide="showSignup" ng-click="showSignup = true">Sign Up?</button>
+  <!-- <button ng-hide="showSignup" ng-click="showSignup = true">Sign Up?</button> -->
   <div ng-show="showSignup">
     <label>Organization</label>
     <input type="text" ng-model='user.organization' placeholder="ex: StartUp Hall"/>

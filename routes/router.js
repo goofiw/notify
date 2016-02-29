@@ -13,7 +13,7 @@ var router = require('koa-router')();
 
   router.post('/api/login', auth.login);
 
-  router.post('/api/signup', auth.signup);
+  // router.post('/api/signup', auth.signup);
 
   router.get('/api/authcheck', auth.checkToken);
 
